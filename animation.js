@@ -481,10 +481,10 @@ frame sets. */
     
     // TITLE (and such)
 // change font and font-size for better visibilty   
-// buffer.font = "bold 15px Arial";    
-// buffer.fillStyle = "red"; 
-// buffer.textAlign = "center";   
-// buffer.fillText( "BROTHERS", 80, 18 );
+buffer.font = "bold 15px Arial";    
+buffer.fillStyle = "#e1e1e1"; 
+buffer.textAlign = "center";   
+buffer.fillText( "EXLIGHT", 80, 18 );
 
 // buffer.font = "italic 15px Times"; 
 // buffer.fillStyle = "yellow"; 
