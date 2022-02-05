@@ -1,4 +1,3 @@
-# brothersmoving
-Brothers moving web / game
-# brothersmoving.github.io
-Demo site for staging comparison with the team
+## 64 bit sprite pixel animation game in pure javascript
+
+### awaiting NFT on opensea.io
