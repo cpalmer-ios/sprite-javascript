@@ -214,7 +214,7 @@ frame sets. */
   each sprite image in the sprite sheet, just like a tile sheet and a tile map. */
   sprite_sheet = {
 
-    frame_sets:[[0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], [2, 3], [25, 24], [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]],// standing still, walk right, walk left
+    frame_sets:[[0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], [1, 2, 3, 13, 14, 15, 16, 17, 18, 19, 20, 21], [22, 23, 24, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43], [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]],// standing still, walk right, walk left
     image: new Image(),
 
   };
@@ -247,6 +247,25 @@ frame sets. */
 
   // };
 
+  // Mobile Controls
+
+  var el = document.getElementById("canvas");
+
+  el.addEventListener("touchstart", touchHandler);
+  el.addEventListener("touchmove", touchHandler);
+  
+
+  function touchHandler(e) {
+    console.log(e)
+    if(e.touches[0].pageX) {
+        player.x_velocity = e.touches[0].pageX / 225;
+        console.log(`Touch:  x: ${player.x_velocity}`);
+        e.preventDefault();
+    }
+}
+
+
+
   scene_0 = {
 
     image0: new Image(),
@@ -266,19 +285,19 @@ frame sets. */
 
     if (controller.down.active) {
       /* To change the animation, all you have to do is call animation.change. */
-      player.animation.change(sprite_sheet.frame_sets[3], 15);
+      player.animation.change(sprite_sheet.frame_sets[3], 1);
 
     }
 
     if (controller.left.active) {
       /* To change the animation, all you have to do is call animation.change. */
-      player.animation.change(sprite_sheet.frame_sets[2], 15);
+      player.animation.change(sprite_sheet.frame_sets[2], 4);
       player.x_velocity -= 0.095;
 
     }
 
     if (controller.right.active) {
-      player.animation.change(sprite_sheet.frame_sets[1], 15);
+      player.animation.change(sprite_sheet.frame_sets[1], 4);
       player.x_velocity += 0.095; 
     }
 
@@ -287,10 +306,10 @@ frame sets. */
       player.animation.change(sprite_sheet.frame_sets[0], 2);
     }
 
-    /* Space Bar super power thing */
+    /* Space Bar super power down thing */
     if (controller.space_bar.active) {
-      player.animation.change(sprite_sheet.frame_sets[0], 2);
-      player.x_velocity = 0.0;
+      player.animation.change(sprite_sheet.frame_sets[1], 2);
+      player.y_velocity += 7;
     }
     
     if (controller.e.active) {
@@ -444,7 +463,7 @@ frame sets. */
 
     /* Draw the pavement */
     buffer.lineWidth='12';
-    buffer.strokeStyle='gray';
+    buffer.strokeStyle='#e1e1e1';
     buffer.lineCap='square';
     buffer.beginPath();
     buffer.moveTo(0,80);
