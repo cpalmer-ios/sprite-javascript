@@ -20,7 +20,7 @@ frame sets. */
   sprite image / tile in the sprite sheet. By arranging these values in a frame set
   array, you can create a sequence of frames that make an animation when played in
   quick succession. */
-  var Animation = function(frame_set, delay) {
+  const Animation = function(frame_set, delay) {
 
     this.count = 0;// Counts the number of game cycles since the last frame change.
     this.delay = delay;// The number of game cycles to wait until the next frame change.
@@ -68,7 +68,7 @@ frame sets. */
 
   };
 
-  var buffer, controller, display, loop, player, aske, render, resize, aske_sprite_sheet, sprite_sheet, nils, nils_sprite_sheet, truck_sprite, truck, cop, cop_sprite_sheet, scene_0;
+  let buffer, controller, display, loop, player, aske, render, resize, aske_sprite_sheet, sprite_sheet, nils, nils_sprite_sheet, truck_sprite, truck, cop, cop_sprite_sheet, scene_0;
 
   buffer = document.createElement("canvas").getContext("2d");
   display = document.querySelector("canvas").getContext("2d");
@@ -90,7 +90,7 @@ frame sets. */
     keyUpDown:function(event) {
 
       /* Get the physical state of the key being pressed. true = down false = up*/
-      var key_state = (event.type == "keydown") ? true : false;
+      const key_state = (event.type == "keydown") ? true : false;
 
       switch(event.keyCode) {
 
@@ -249,18 +249,25 @@ frame sets. */
 
   // Mobile Controls
 
-  var el = document.getElementById("canvas");
+  const el = document.getElementById("canvas");
 
   el.addEventListener("touchstart", touchHandler);
   el.addEventListener("touchmove", touchHandler);
+  el.addEventListener("touchend", touchHandler);
   
 
   function touchHandler(e) {
+    window.localStorage.event = e.touches[0].pageX;
     console.log(e)
     if(e.touches[0].pageX) {
-        player.x_velocity = e.touches[0].pageX / 225;
-        console.log(`Touch:  x: ${player.x_velocity}`);
-        e.preventDefault();
+      
+      let x = e.touches[0].pageX > 200 ? e.touches[0].pageX / 225 : e.touches[0].pageX / 225 - 5;
+      let pos = e.touches[0].pageX > 200 ? sprite_sheet.frame_sets[0] : sprite_sheet.frame_sets[2];
+      player.animation.change(pos, 4);
+      player.x_velocity = x;
+      
+      console.log(`Touch:  x: ${player.x_velocity}`);
+      e.preventDefault();
     }
 }
 
@@ -274,6 +281,18 @@ frame sets. */
   };
     
   loop = function(time_stamp) {
+
+    // if(window.localStorage.event) {
+      
+    //   let x = window.localStorage.event > 200 ? window.localStorage.event / 225 : window.localStorage.event / 225 - 5;
+    //   let pos = window.localStorage.event > 200 ? sprite_sheet.frame_sets[0] : sprite_sheet.frame_sets[2];
+    //   player.animation.change(pos, 4);
+      
+    //   player.x_velocity = x;
+    //   console.log(`Touch:  x: ${player.x_velocity}`);
+    // } else if (!window.localStorage.event){
+    //   //  Do nothing
+    // }
 
     if (controller.up.active && !player.jumping) {
 
